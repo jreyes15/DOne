@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Mars Rovers";
+}
+<div ng-app="TestApp" ng-controller="trainController" ng-init="init()">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">Candidate Test</h3>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover">
+            <h4 class="cover-heading">Instructions.</h4>
+            <p class="lead">
+                Assume the southwest corner of the grid is 0,0 (the origin). The first line of input establishes the exploration grid bounds by indicating the coordinates corresponding to the northeast corner of the plateau.
+            </p>
+            <p class="lead">
+                Next, each rover is given its instructions in turn. Each rover’s instructions consists of two lines of strings. The first string confirms the rover’s current position and heading. The second string consists of turn/move instructions.
+            </p>
+        </main>
+    </div>
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <textarea class="bg-dark" placeholder="Write your code" cols="20" rows="10" ng-model="currentScript"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                Results will shown below
+            </div>
+            <div class="col-4">
+                <button class="btn btn-primary float-right" ng-click="doWork()">Run</button>
+            </div>
+        </div>
+    </section>
+    <hr />
+    <section>
+        <div class="row bg-dark">
+            <div class="col-12">
+                <canvas id="canvas" width="500" height="500"></canvas>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row" ng-repeat="rover in result.rovers">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rover {{ rover.name }}</h5>
+                    <p class="card-text">
+                    Starting point X={{ rover.coordinate.X }}, Y={{ rover.coordinate.Y }}, Z={{ rover.coordinate.Z }} <br /> 
+                    Result point X={{ rover.coordinateResult.X }}, Y={{ rover.coordinateResult.Y }}, Z={{ rover.coordinateResult.Z }}</p>
+                </div>
+                <div class="card-footer">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" ng-repeat="movement in rover.movements">Input: {{movement.Input}} - Result: <span ng-show="movement.done">X={{ movement.currentValueXAxis }}, Y={{ movement.currentValueYAxis }}, Z={{ movement.currentAxis }}</span><span ng-show="!movement.done" class="text-danger">{{movement.error}}</span>  </li>
+                    </ul>
+                </div>
+            </div>
+            <br />
+        </div>
+    </section>
+</div>
+@section scripts {
+    <script>
+        var app = angular.module("TestApp", []);
+    </script>
+    <script src="~/Scripts/Controller/trainController.js"></script>
+}
